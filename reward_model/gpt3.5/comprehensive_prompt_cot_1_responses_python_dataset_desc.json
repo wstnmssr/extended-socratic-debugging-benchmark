@@ -1,0 +1,26 @@
+{
+    "count": {
+        "prediction": 1628.0
+    },
+    "mean": {
+        "prediction": 4.5389131568
+    },
+    "std": {
+        "prediction": 0.6186774825
+    },
+    "min": {
+        "prediction": 2.4172594547
+    },
+    "25%": {
+        "prediction": 4.1700086594
+    },
+    "50%": {
+        "prediction": 4.6393752098
+    },
+    "75%": {
+        "prediction": 4.953266263
+    },
+    "max": {
+        "prediction": 6.3367166519
+    }
+}
