@@ -1,0 +1,61 @@
+<problem>
+Write a function `reverseList(List<Object> lst) -> List<Object>` that returns `lst` in reverse order.
+## Example Cases:
+```
+reverseList(Arrays.asList(1, 2, 3)) => Arrays.asList(3, 2, 1)
+reverseList(Arrays.asList(1, 2, 3, 4, 5)) => Arrays.asList(5, 4, 3, 2, 1)
+reverseList(Arrays.asList()) => Arrays.asList()
+reverseList(Arrays.asList("Hi", "Hello", "Goodbye")) => Arrays.asList("Goodbye", "Hello", "Hi")
+```
+</problem>
+<bug_code>
+1. public static List<Object> reverseList(List<Object> lst) {
+2.     return lst.subList(lst.size() - 1, lst.size());
+3. }
+</bug_code>
+<bug_desc>
+On line 2, the way the subList method is used creates a list containing only the last element in `lst` instead of a list containing all the elements of `lst` in reverse order.
+</bug_desc>
+<bug_fixes>
+Replace `return lst.subList(lst.size() - 1, lst.size())` with `Collections.reverse(lst); return lst;` on line 2.
+</bug_fixes>
+<unit_tests>
+assert reverseList(Arrays.asList(1, 2, 3)).equals(Arrays.asList(3, 2, 1));
+assert reverseList(Arrays.asList(1, 2, 3, 4, 5)).equals(Arrays.asList(5, 4, 3, 2, 1));
+assert reverseList(Arrays.asList()).equals(Arrays.asList());
+assert reverseList(Arrays.asList("Hi", "Hello", "Goodbye")).equals(Arrays.asList("Goodbye", "Hello", "Hi"));
+</unit_tests>
+<stu_desc>
+
+</stu_desc>
+<dialogue>
+User: I'm trying to reverse the elements of a list but it's not working.
+Assistant: Can you describe how you're trying to reverse the list?
+	<alt>Can you describe the problem you're having in more detail?
+	<alt>Let's start with a simple example. What do you expect the output of `reverseList(Arrays.asList(1, 2, 3))` to do?
+	<alt>Let's start with a warm-up question. What does the subList method do?
+	<alt>What happens when you run `reverseList(Arrays.asList(1, 2, 3))`? What do you observe?
+	<alt>Where can you learn more about how to reverse a list?
+User: Sure, I used the subList method.
+Assistant: Can you describe what the subList method does?
+	<alt>How do you think this reverses the list?
+	<alt>Do you notice a pattern in your function's outputs?
+	<alt>How does subList work in Java?
+	<alt>What happens when you run `reverseList(Arrays.asList(1, 2, 3))`? What do you observe?
+User: I think it should return a list in reverse order but it's returning the last element of the list instead.
+	<alt>The subList method should return a list in reverse order.
+Assistant: Good. Let's visit the Java documentation about subList. Do you notice anything about reversing a list?
+	<alt>Let's start with a simple problem. How can you obtain the first element of the list `a = Arrays.asList(1, 2, 3)`?
+	<alt>Good. So where can you learn more about how to reverse a list?
+	<alt>Good. Let's visit the Java documentation about subList. Do you notice anything about reversing a list?
+    <alt>Good. Say you have an array `a = Arrays.asList(1, 2, 3)`. How can you obtain every other element? So, `[1, 3]`?
+User: I see. Got it. I think I need to use the `Collections.reverse(lst)` method. I'll update my code. It looks like it's working now.
+<code>
+public static List<Object> reverseList(List<Object> lst) {
+    Collections.reverse(lst);
+    return lst;
+}
+</code>
+Assistant: Great! Let me know if you run into any other problems!
+User: Thanks!
+</dialogue>

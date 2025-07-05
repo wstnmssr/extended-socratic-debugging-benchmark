@@ -1,0 +1,90 @@
+<problem>
+Create a method `calculateGrade(float hw, float exams, float projects, float att)` that takes in four float parameters between 0 and 100 representing a student's grades in four different categories: Homework (`hw`) which is worth 20% of the final grade, Exams (`exams`) worth 40% of the final grade, Projects (`projects`) worth 30%, and Attendance (`att`), worth 10%. The function should calculate the final grade a student is getting and return a tuple containing the final letter grade and the final numeric grade rounded up to the nearest whole number.
+
+The letter grade should be determined based on the following scale:
+
+* A for a final rounded grade between 90 and 100 (inclusive)
+* B for a final rounded grade between 80 and 89 (inclusive)
+* C for a final rounded grade between 70 and 79 (inclusive)
+* D for a final rounded grade between 60 and 69 (inclusive)
+* F for a final rounded grade below 60.
+
+For example, if you enter `calculateGrade(75, 60, 73, 87)`, the function should return `('C', 70)` because the final raw score is `69.6` which rounds up to `70` and corresponds to a letter grade of `C`.
+
+## Example Cases:
+```
+calculateGrade(100, 100, 100, 100) => ('A', 100)
+calculateGrade(100, 89, 85, 90) => ('A', 90)
+calculateGrade(72, 96, 74, 98) => ('B', 85)
+calculateGrade(100, 82, 68, 94) => ('B', 83)
+calculateGrade(75, 60, 73, 100) => ('C', 71)
+calculateGrade(75, 60, 73, 87) => ('C', 70)
+calculateGrade(70, 60, 65, 70) => ('D', 64)
+calculateGrade(12, 14, 23, 10) => ('F', 16)
+calculateGrade(0, 0, 0, 0) => ('F', 0)
+```
+</problem>
+<bug_desc>
+The return statement on line 20 is never executed. Consequently, the function only returns a string `letterGrade` instead of returning a tuple with a string and an integer containing the letter grade and the rounded final score respectively.
+</bug_desc>
+<bug_fixes>
+Remove line 20 and replace `letterGrade` with `new Tuple<>(letterGrade, roundedScore)` on line 20.
+</bug_fixes>
+<unit_tests>
+assert calculateGrade(100, 100, 100, 100).equals(new Tuple<>("A", 100));
+assert calculateGrade(100, 89, 85, 90).equals(new Tuple<>("A", 90));
+assert calculateGrade(72, 96, 74, 98).equals(new Tuple<>("B", 85));
+assert calculateGrade(100, 82, 68, 94).equals(new Tuple<>("B", 83));
+assert calculateGrade(75, 60, 73, 100).equals(new Tuple<>("C", 71));
+assert calculateGrade(75, 60, 73, 87).equals(new Tuple<>("C", 70));
+assert calculateGrade(70, 60, 65, 70).equals(new Tuple<>("D", 64));
+assert calculateGrade(12, 14, 23, 10).equals(new Tuple<>("F", 16));
+assert calculateGrade(0, 0, 0, 0).equals(new Tuple<>("F", 0));
+</unit_tests>
+<stu_desc>
+
+</stu_desc>
+<dialogue>
+User: Hi, please help I'm not sure what's going wrong
+Assistant: Hello. Let's take a look at your code together. What problem are you facing?
+	<alt>Hi. Are you encountering an error?
+    <alt>Hello. Can you describe your code line by line?
+	<alt>Hi. Let's recall what you know about return statements in Java. What happens when a compiler encounters a return statement?
+User: It does not throw an error, but it does not show everything I want it to either.
+	<alt>No errors but it is not working as expected.
+Assistant: Let's look at the instructions. Is there any information that is missing or not being displayed in your output?
+	<alt>What seems to be missing from your output if you run your code and compare it with the expected output?
+User: I want to return two variables `letterGrade` and `roundedScore` but my function only returns `letterGrade`.
+	<alt>I want to return two variables, but my code only returns one even though I am trying to return both.
+	<alt>I am attempting to return two variables in my code, but only one is being returned despite my efforts to return both.
+Assistant: At which line are you attempting to return two variables?
+User: Although I am returning `letterGrade` on line 19 and `roundedScore` on line 20, it seems like line 20 never runs.
+	<alt>I am returning the variables on lines 19 and 20, but it seems like the code stops after line 19.
+Assistant: Based on the observed behavior, do you believe a function can contain two back-to-back return statements?
+	<alt>After looking at the comparison with the instructions, do you think this might be the correct way to return multiple variables?
+User: No, I think I can only use one return statement. But how do I return multiple variables?
+	<alt>How do I return multiple variables with only one return statement?
+Assistant: Let's refer back to the instructions, and this time we will pay attention to the data type of the expected output. What do you observe?
+User: The expected output consists of a tuple. I suppose I can return the variables together as a tuple with one return statement. I'll try that now.
+<code>
+1. public static Tuple<String, Integer> calculateGrade(float hw, float exams, float projects, float att) {
+2.    float finalScore = hw * 0.2f + exams * 0.4f + projects * 0.3f + att * 0.1f;
+3.    int roundedScore = Math.round(finalScore);
+4.    String letterGrade;
+5.    if (roundedScore >= 90) {
+6.        letterGrade = "A";
+7.    } else if (roundedScore >= 80) {
+8.        letterGrade = "B";
+9.    } else if (roundedScore >= 70) {
+10.        letterGrade = "C";
+11.    } else if (roundedScore >= 60) {
+12.        letterGrade = "D";
+13.    } else {
+14.        letterGrade = "F";
+15.    }
+16.    return new Tuple<>(letterGrade, roundedScore);
+17. }
+</code>
+Assistant: Great job! Is your code working now?
+User: It displays the expected output.
+</dialogue>

@@ -1,0 +1,65 @@
+<problem>
+Write a function `getWords(String s) -> List<String>` that extracts all the words from the input string `s`, changes them all to be lower case, and returns a list containing all unique words (no duplicates) in alphabetical order. Assume that a word is a maximal sequence of characters that does not contain any space. For example, `getWords("Hello World hello")` should return `['hello', 'world']`.
+
+## Example Cases:
+```
+getWords("Hello World") => ['hello', 'world']
+getWords("Hello World hello") => ['hello', 'world']
+getWords("Hello World hello world") => ['hello', 'world']
+getWords("Hello World H e l l o W o r l d") => ['d', 'e', 'h', 'hello', 'l', 'o', 'r', 'w', 'world']
+getWords("Hello World el WORld") => ['el', 'hello', 'world']
+getWords("A C B c b a") => ['a', 'b', 'c']
+```
+</problem>
+<bug_code>
+1. public List<String> getWords(String s) {
+2.    List<String> words = Arrays.asList(s.toLowerCase().split(" "));
+3.    return words.stream().sorted().collect(Collectors.toList());
+4. }
+</bug_code>
+<bug_desc>
+The function returns a list of sorted words in alphabetical order, however, if `s` contains repeated words, the function returns all the words instead of removing the duplicated words in `s`.
+</bug_desc>
+<bug_fixes>
+Replace `words.stream().sorted().collect(Collectors.toList())` with `words.stream().distinct().sorted().collect(Collectors.toList())` on line 3.
+</bug_fixes>
+<unit_tests>
+assert getWords("Hello World").equals(Arrays.asList("hello", "world"));
+assert getWords("Hello World hello").equals(Arrays.asList("hello", "world"));
+assert getWords("Hello World hello world").equals(Arrays.asList("hello", "world"));
+assert getWords("Hello World H e l l o W o r l d").equals(Arrays.asList("d", "e", "h", "hello", "l", "o", "r", "w", "world"));
+assert getWords("Hello World el WORld").equals(Arrays.asList("el", "hello", "world"));
+assert getWords("A C B c b a").equals(Arrays.asList("a", "b", "c"));
+</unit_tests>
+<stu_desc>
+
+</stu_desc>
+<dialogue>
+User: I'm trying to implement this function, but my code is failing on certain examples like `getWords("Hello World hello")`.
+	<alt>Hi! I've been working on this function and it doesn't seem to be correct.
+Assistant: Does your code work for all the examples in the problem description or does it fail on some of them?
+	<alt>Hello! Can you explain to me what the code on line 2 does?
+	<alt>Let's review the problem description together. What are the requirements for the returned list?
+	<alt>Can you walk me through your `getWords` function?
+	<alt>Let's run through the examples in the problem description. What happens when you run `getWords("Hello World")` and `getWords("Hello World hello")`? What do you observe?
+	<alt>Let's start with a simple example. Say you have a list of letters `['A', 'A', 'B']`. How would you remove the duplicate letters from the list and return a list of unique letters?
+User: It works for all the example cases except for `getWords("Hello World")`.
+Assistant: Let's look at the example cases closely. What is so special about `getWords("Hello World")` compared to the other examples?
+	<alt>Let's review the problem description together. What are the requirements for the returned list?
+User: For that sentence, there are no repeated words.
+Assistant: Good. How does your code behave when there are repeated words in the input string `s` and how is it different from the expected behavior?
+	<alt>What would your code need to do to ensure that when there are duplicate words in the input string, the function returns a list of unique words?
+User: It seems like I am not deduplicating. How would I go about doing that?
+Assistant: Let's recollect what we know about data structures. Which data structure in Python would store unique elements only?
+	<alt>I feel like the best way to describe this would be to enforce a math concept. What do you call a mathematical collection without duplicates?
+	<alt>Where can you learn about deduplicating a list in Python?
+	<alt>Have you considered simply looping through the list and removing duplicates?
+User: I could try using a set instead since that makes sure elements are unique. I'll change my code
+<code>
+1. public List<String> getWords(String s) {
+2.    List<String> words = Arrays.asList(s.toLowerCase().split(" "));
+3.    return words.stream().distinct().sorted().collect(Collectors.toList());
+4. }
+</code>
+Assistant: It looks like it works!
+</dialogue>

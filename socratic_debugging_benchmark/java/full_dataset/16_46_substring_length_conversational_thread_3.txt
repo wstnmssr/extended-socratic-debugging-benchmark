@@ -1,0 +1,143 @@
+<problem>
+Write a function `substrLen(String s, String t)` that takes as input a string `s` and a non-empty string `t` and returns the length of the longest substring of `s` that does not contain `t`. For example, if `s = "abracadabra"` and `t = "ca"`, then the longest substring of `s` that does not contain `t` is `"dabra"`, so the function should return 5.
+## Example Cases:
+```
+substrLen("abracadabra", "ca") => 5
+substrLen("I love Python", "Py") => 7
+substrLen("contest", "test") => 3
+substrLen("icey ice", "ice") => 2
+substrLen("icey ice cream", "ice") => 6
+substrLen("abracadabra", "abba") => 11
+```
+</problem>
+<bug_code>
+1. public class SubstringLength {
+2.    public static int substrLen(String s, String t) {
+3.        int maxLen = 0;
+4.        int start = 0;
+5.        int pos = s.indexOf(t, start);
+6.        while (pos != -1) {
+7.            String crtStr = s.substring(start, pos);
+8.            int crtLen = crtStr.length();
+9.            if (crtLen > maxLen) {
+10.                maxLen = crtLen;
+11.            }
+12.            start = pos + t.length();
+13.            pos = s.indexOf(t, start);
+14.        }
+15.        return maxLen;
+16.    }
+17. }
+</bug_code>
+<bug_desc>
+The code does not check for the case when the longest substring is at the end of the string, therefore it fails on test examples 1 and 5.
+</bug_desc>
+<bug_fixes>
+After line 13, insert the following outside the while loop scope:
+```java
+String lastStr = s.substring(start);
+int lastLen = lastStr.length();
+if (lastLen > maxLen) {
+       maxLen = lastLen;
+}
+```
+</bug_fixes>
+<unit_tests>
+public class SubstringLengthTest {
+    public static void main(String[] args) {
+        assert SubstringLength.substrLen("abracadabra", "ca") == 5;
+        assert SubstringLength.substrLen("I love Python", "Py") == 7;
+        assert SubstringLength.substrLen("contest", "test") == 3;
+        assert SubstringLength.substrLen("icey ice", "ice") == 2;
+        assert SubstringLength.substrLen("icey ice cream", "ice") == 6;
+        assert SubstringLength.substrLen("abracadabra", "abba") == 11;
+    }
+}
+</unit_tests>
+<stu_desc>
+
+</stu_desc>
+<dialogue>
+User: Hi! I need help with my code, it does not work on some test examples such as the first one, and I do not understand why. Can you help?
+Assistant: Sure. Looking at the first test example, what is the longest substring your code finds and what is the correct substring?
+	<alt>Sure. Using the input for the first test example, can you go through your code line by line and show the values calculated for each variable?
+	<alt>I would be happy to. First, can you walk me through your code and explain what each variable is supposed to do?
+	<alt>Sure. Can you list all the correct longest substrings for the test examples and see if you notice anything special about test examples 1 and 5 on which your code returns the wrong result?
+	<alt>Sure. Inside the while block, right after line 6, can you include a print statement `print('crt_str = ', crt_str)`, run your code on the first test example, and see if you notice anything useful or missing about the strings extracted by your code?
+	<alt>Sure. Do you notice anything different about test examples 1 and 5 on which your code does not work?
+	<alt>Sure. Looking at the first test example, what is the correct longest substring and is there any variable in your code that stores that string at some point during its execution?
+User: I don't know what the code finds as the longest substring, how can I determine that?
+	<alt>The longest substring is 'dabra' and I think this is also what my code finds.
+Assistant: Inside the while block, right after line 6, can you include a print statement `print('crt_str = ', crt_str)` and run your code on the first test example?
+	<alt>Can you add a new variable `maxStr` that is updated with `crtStr` every time the `maxLen` is updated in the if clause? Then print its value right before returning from the function.
+User: OK ... I did that. The code finds only the substring `abra`. Ah, now I see what the problem is, the maximum substring should be 'dabra'.
+<code>
+1. public class SubstringLength {
+2.    public static int substrLen(String s, String t) {
+3.        int maxLen = 0;
+4.        int start = 0;
+5.        int pos = s.indexOf(t, start);
+6.        while (pos != -1) {
+7.            String crtStr = s.substring(start, pos);
+8.            System.out.println("crtStr = " + crtStr);
+9.            int crtLen = crtStr.length();
+10.            if (crtLen > maxLen) {
+11.                maxLen = crtLen;
+12.            }
+13.            start = pos + t.length();
+14.            pos = s.indexOf(t, start);
+15.        }
+16.        String lastStr = s.substring(start);
+17.        int lastLen = lastStr.length();
+18.        if (lastLen > maxLen) {
+19.            maxLen = lastLen;
+20.        }
+21.        return maxLen;
+22.    }
+23.    public static void main(String[] args) {
+24.        substrLen("abracadabra", "ca");
+25.    }
+26. }
+</code>
+Assistant: That's correct. What variable in your code stores the position where 'dabra' starts in `s`, and where does it end?
+	<alt>That's correct. Can you now change your code so that is also considers the substring 'dabra'?
+User: I don't know, how can I find that?
+	<alt>I think it is the variable `start`, right before `pos` becomes -1. It should end where `s` ends.
+Assistant: If you look at the test example, 'dabra' appears right after the last occurrence of `ca`. Which variable in your code computes that position?
+	<alt>Can you tell me what the variable `start` is supposed to do and how it is computed?
+	<alt>Which variable in your code computes the index right after the last occurrence of the string `t`?
+User: So it must be the sum between where `ca` starts, which is in `pos` and the length of `ca`, that is what `start` does.
+Assistant: Correct. Now, where does 'dabra' end?
+	<alt>Correct. Can you now write code to extract the string 'dabra' and consider it when computing the maximum length?
+User: It ends at the end of the input string `s`.
+Assistant: Correct. So it starts at the last value of `start` and ends at `len(s)`. Can you now write code to extract the string 'dabra' and consider it when computing the maximum length?
+User: Ok, I did that and it works now. Thank you!
+<code>
+1. public class SubstringLength {
+2.    public static int substrLen(String s, String t) {
+3.        int maxLen = 0;
+4.        int start = 0;
+5.        int pos = s.indexOf(t, start);
+6.        while (pos != -1) {
+7.            String crtStr = s.substring(start, pos);
+8.            int crtLen = crtStr.length();
+9.            if (crtLen > maxLen) {
+10.                maxLen = crtLen;
+11.            }
+12.            start = pos + t.length();
+13.            pos = s.indexOf(t, start);
+14.        }
+15.        String lastStr = s.substring(start);
+16.        int lastLen = lastStr.length();
+17.        if (lastLen > maxLen) {
+18.            maxLen = lastLen;
+19.        }
+20.        return maxLen;
+21.    }
+22.    public static void main(String[] args) {
+23.        System.out.println(substrLen("abracadabra", "ca"));
+24.    }
+25. }
+</code>
+Assistant: Great, glad that I could be of help!
+</dialogue>

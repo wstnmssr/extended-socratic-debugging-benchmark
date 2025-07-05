@@ -1,0 +1,92 @@
+<problem>
+Write a function `substrLen(String s, String t) -> int` that takes as input a string `s` and a non-empty string `t` and returns the length of the longest substring of `s` that does not contain `t`. For example, if `s = "abracadabra"` and `t = "ca"`, then the longest substring of `s` that does not contain `t` is `"dabra"`, so the function should return 5.
+## Example Cases:
+```
+substrLen("abracadabra", "ca") => 5
+substrLen("I love Python", "Py") => 7
+substrLen("contest", "test") => 3
+substrLen("icey ice", "ice") => 2
+substrLen("icey ice cream", "ice") => 6
+substrLen("abracadabra", "abba") => 11
+```
+</problem>
+<bug_code>
+1. public static int substrLen(String s, String t) {
+2.     int maxLen = 0;
+3.     int start = 0;
+4.     int pos = s.indexOf(t, start);
+5.     while (pos != -1) {
+6.         String crtStr = s.substring(start, pos);
+7.         int crtLen = crtStr.length();
+8.         if (crtLen > maxLen) {
+9.             maxLen = crtLen;
+10.        }
+11.        start = pos + t.length();
+12.        pos = s.indexOf(t, start);
+13.    }
+14.    return maxLen;
+15. }
+</bug_code>
+<bug_desc>
+The code does not check for the case when the longest substring is at the end of the string, therefore it fails on test examples 1 and 5.
+</bug_desc>
+<bug_fixes>
+After line 12, insert the following outside the while loop scope:
+```java
+String lastStr = s.substring(start);
+int lastLen = lastStr.length();
+if (lastLen > maxLen) {
+    maxLen = lastLen;
+}
+```
+</bug_fixes>
+<unit_tests>
+assert substrLen("abracadabra", "ca") == 5;
+assert substrLen("I love Python", "Py") == 7;
+assert substrLen("contest", "test") == 3;
+assert substrLen("icey ice", "ice") == 2;
+assert substrLen("icey ice cream", "ice") == 6;
+assert substrLen("abracadabra", "abba") == 11;
+</unit_tests>
+<stu_desc>
+
+</stu_desc>
+<dialogue>
+User: Hi! I need help with my code, it does not work on some test examples such as the first one, and I do not understand why. Can you help?
+Assistant: I would be happy to. First, can you walk me through your code and explain what each variable is supposed to do?
+	<alt>Sure. Using the input for the first test example, can you go through your code line by line and show the values calculated for each variable?
+	<alt>Sure. Looking at the first test example, what is the longest substring your code finds and what is the correct substring?
+	<alt>Sure. Can you list all the correct longest substrings for the test examples and see if you notice anything special about test examples 1 and 5 on which your code returns the wrong result?
+	<alt>Sure. Inside the while block, right after line 6, can you include a print statement `print('crtStr = ', crtStr)`, run your code on the first test example, and see if you notice anything useful or missing about the strings extracted by your code?
+	<alt>Sure. Do you notice anything different about test examples 1 and 5 on which your code does not work?
+	<alt>Sure. Looking at the first test example, what is the correct longest substring and is there any variable in your code that stores that string at some point during its execution?
+User: `maxLen` is a variable that stores the maximum length found so far, initialized with 0.  `start` stores the starting position in the input string `s` that we want to search for `t`, also initialized with 0. `pos` stores the position in the string `s` where the other string `t` is found. Inside the while loop, I have `crtStr` which stores the actual substring found between consecutive occurrences or `t` in `s`, with its length stored in `crtLen`. This substring is always between `start` and the current value of `pos`, which requires `start to be updated to contain the index right after the current occurrence of `t`.
+Assistant: Very good. So, you are saying then that the maximum length substring should be one of the strings computed in `crtStr` that are found between consecutive occurrences of `t` in `s`. Looking at test example 1, what is the correct maximum length substring and does it appear between consecutive occurrences or 'ca' in the input string?
+	<alt>Good. Do you think the maximum length substring always appears between consecutive occurrences of the string `t`?
+	<alt>Very good. If the maximum length substring appeared at the end of the string `s`, would your code extract it in `crtStr`?
+	<alt>Good. Can you tell me what is the last value that is assigned to `start` before `pos` becomes -1 and what is the substring of `s` that starts at that position?
+User: Ah, I see now. The maximum substring should be "dabra", which is between the last occurrence of `t` and the end of the string. I should have checked for substrings that end at the end of `s`, let me do that ... It works now! Thank you!
+<code>
+1. public static int substrLen(String s, String t) {
+2.     int maxLen = 0;
+3.     int start = 0;
+4.     int pos = s.indexOf(t, start);
+5.     while (pos != -1) {
+6.         String crtStr = s.substring(start, pos);
+7.         int crtLen = crtStr.length();
+8.         if (crtLen > maxLen) {
+9.             maxLen = crtLen;
+10.        }
+11.        start = pos + t.length();
+12.        pos = s.indexOf(t, start);
+13.    }
+14.    String lastStr = s.substring(start);
+15.    int lastLen = lastStr.length();
+16.    if (lastLen > maxLen) {
+17.        maxLen = lastLen;
+18.    }
+19.    return maxLen;
+20. }
+</code>
+Assistant: You're welcome, glad I could be of help!
+</dialogue>

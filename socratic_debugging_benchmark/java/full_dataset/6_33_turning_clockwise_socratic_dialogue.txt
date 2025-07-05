@@ -1,0 +1,124 @@
+﻿<problem>
+The four compass points can be abbreviated by single-letter strings as “N”, “E”, “S”, and “W”. Write a function `turnClockwise (String compassPoint)` that takes one of these four compass points as its parameter, and returns the next compass point in the clockwise direction. If `compassPoint` has another value that's distinct from the four compass points listed earlier, return the value null.
+
+## Example Cases:
+```
+turnClockwise("N") => "E"
+turnClockwise("W") => "N"
+turnClockwise("S") => "W"
+turnClockwise("E") => "S"
+turnClockwise(42) => null
+turnClockwise("rubbish") => null
+```
+</problem>
+<bug_code>
+1. public class Compass {
+2.    public static String turnClockwise(String compassPoint) {
+3.        if (compassPoint.equals("N")) {
+4.            System.out.println("E");
+5.        } else if (compassPoint.equals("E")) {
+6.            System.out.println("S");
+7.        } else if (compassPoint.equals("S")) {
+8.            System.out.println("W");
+9.        } else if (compassPoint.equals("W")) {
+10.            System.out.println("N");
+11.        } else {
+12.            System.out.println("null");
+13.        }
+14.    }
+15. }
+</bug_code>
+<bug_desc>
+The function prints the strings "N", "E", "S", "W", and "null". Consequently, the function returns `null` for all cases of `compassPoint` instead of returning the appropriate strings.
+</bug_desc>
+<bug_fixes>
+Replace all the print statements `System.out.println("E")`, `System.out.println("S")`, `System.out.println("W")`, `System.out.println("N")`, `System.out.println("null")` with the return statements `return "E"`, `return "S"`, `return "W"`, `return "N"`, `return null` on lines 4, 6, 8, 10, and 12 respectively.
+</bug_fixes>
+<unit_tests>
+assert Compass.turnClockwise("N").equals("E");
+assert Compass.turnClockwise("W").equals("N");
+assert Compass.turnClockwise("S").equals("W");
+assert Compass.turnClockwise("E").equals("S");
+assert Compass.turnClockwise("42") == null;
+assert Compass.turnClockwise("rubbish") == null;
+</unit_tests>
+<stu_desc>
+
+</stu_desc>
+<dialogue>
+User: Hi! I have a problem. My code is not producing the correct result and I cannot figure why.
+Assistant: Hi! Let's take a look at your code. Could you explain how your code works?
+    <alt>Hi! What makes you think that your program is not working properly?
+    <alt>Can you give me an example where your code does not return the correct result?
+    <alt>I see. Let's run your code with the function call `String store = Compass.turnClockwise("N")` then print `store` and observe the output in the terminal. What do you see?
+    <alt>I see. Suppose we run your code with the function call `String store = Compass.turnClockwise("N")`. What do you think the value of `store` will be after execution?
+User: Ok. My code gets the current `compassPoint` and outputs the next one.
+Assistant: Can you give me an example specifying what you are passing as `compassPoint` and what you observe as your output in the terminal?
+    <alt>Can you describe what makes the result incorrect?
+    <alt>Can you describe how you determine the next `compassPoint` value, and what your program does with it?
+User: When I pass in `"N"` as `compassPoint`. I see `"E"` printed in the terminal. That's strange since my output is printed correctly, but my program does not pass any of the tests.
+Assistant: What do the unit tests need from your function to ensure that it is implemented properly?
+   <alt>I see. Suppose we run your code with the function call `String store = Compass.turnClockwise("N")`. What do you think the value of `store` will be after execution?
+   <alt>Is printing the same as returning a value?
+   <alt>Say you want to store the output of your function into a variable, what would you need to do?
+   <alt>Let's look at the problem description together. Does it say anywhere that the function needs to print the output in the terminal?
+User: It probably needs the value outputted by the function. My function outputs `"E"` in the terminal when I pass in `"N"` to it. The output is correct, so I am really confused.
+	<alt>I don't understand the question. Can you tell me more about unit tests?
+Assistant: Would you be able to store the value outputted by the function into a variable?
+	<alt>Suppose we run your code with the function call `String store = Compass.turnClockwise("N")`. What do you think the value of `store` will be after execution?
+	<alt>Is printing the same as returning a value?
+User: Hypothetically yes. I should be able to store it in a variable. I have not tried though.
+Assistant: Suppose we run your code with the function call `String store = Compass.turnClockwise("N")`. What do you think the value of `store` will be after execution?
+	<alt>Let's run your code with the function call `String store = Compass.turnClockwise("N")` then print `store` and observe the output in the terminal. What do you see?
+User: Ah I think, it would be `"E"` in `store`. 
+Assistant: Let's try it and then print `store`. What do you observe in your terminal?
+User: Hmm... I see `null`. That's really strange.
+
+<code>
+1. public class Compass {
+2.    public static String turnClockwise(String compassPoint) {
+3.        if (compassPoint.equals("N")) {
+4.            System.out.println("E");
+5.        } else if (compassPoint.equals("E")) {
+6.            System.out.println("S");
+7.        } else if (compassPoint.equals("S")) {
+8.            System.out.println("W");
+9.        } else if (compassPoint.equals("W")) {
+10.            System.out.println("N");
+11.        } else {
+12.            System.out.println("null");
+13.        }
+14.    }
+15. }
+16. String store = Compass.turnClockwise("N");
+17. System.out.println(store);
+</code>
+
+Assistant: What do you believe the function requires to assign its output to a variable?
+	<alt>Do you recall, which reserved word in Java is used to return the output for a function back to a variable?
+User: Ah! I think it might be `return`. Let me try that.
+<code>
+public class Compass {
+    public static String turnClockwise(String compassPoint) {
+        if (compassPoint.equals("N")) {
+            return "E";
+        } else if (compassPoint.equals("E")) {
+            return "S";
+        } else if (compassPoint.equals("S")) {
+            return "W";
+        } else if (compassPoint.equals("W")) {
+            return "N";
+        } else {
+            return null;
+        }
+    }
+}
+String store = Compass.turnClockwise("N");
+System.out.println(store);
+</code>
+	<alt>I'm not really sure.
+Assistant: Very good.
+	<alt>Very good. Is there a way for you to simplify your code?
+User: Thank you so much!
+Assistant: You're welcome! Let me know if I can be of any further help.
+</dialogue>

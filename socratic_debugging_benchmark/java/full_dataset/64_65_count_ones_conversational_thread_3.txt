@@ -1,0 +1,61 @@
+<problem>
+Write a function called `CountOnes(int[] integers) -> int` which is passed one input, an array of integers. This function should count how many elements in the array are equal to 1, and it should return this number.
+
+## Example Cases:
+```
+CountOnes(new int[]{1,1,1,0,0}) => 3
+CountOnes(new int[]{1,0,0}) => 1
+CountOnes(new int[]{}) => 0
+CountOnes(new int[]{3}) => 0
+```
+</problem>
+<bug_code>
+1. public static int CountOnes(int[] integers) {
+2.     int count = 0;
+3.     for (int i = 1; i < integers.length; i++) {
+4.         if (integers[i] == 1) {
+5.             count++;
+6.         }
+7.     }
+8.     return count;
+9. }
+</bug_code>
+<bug_desc>
+On line 3, the loop iterates `integers.length - 1` times instead of `integers.length` times. Consequently, the function does not access all elements in the `integers` array and always skips the first element in `integers`.
+</bug_desc>
+<bug_fixes>
+Replace `1` with `0` in the `for` loop on line 3.
+</bug_fixes>
+<unit_tests>
+assert CountOnes(new int[]{1,1,1,0,0}) == 3;
+assert CountOnes(new int[]{1,0,0}) == 1;
+assert CountOnes(new int[]{}) == 0;
+assert CountOnes(new int[]{3}) == 0;
+</unit_tests>
+<stu_desc>
+
+</stu_desc>
+<dialogue>
+User: Hello! I was working on my `CountOnes()` function and I keep getting the wrong count but I don't know what I'm doing wrong.
+Assistant: Hello! Can you explain what your `for` loop does?
+User: It is a loop over `for (int i = 1; i < integers.length; i++)` and then checks if the element of `integers` at index `i` is 1, and if it is, increments the count.
+Assistant: When you loop with `for (int i = 1; i < integers.length; i++)` you put into `i` every value in the list `range(1, integers.length)`. Do you think there is a better way to loop over a list using this paradigm?
+User: Oh, is it possible to do `for (int integer : integers)`?
+Assistant: That is entirely correct! Can you explain the functional difference between your previous solution and this one?
+User: Oh, I think my previous loop only iterated `integers.length - 1` times, while this loop iterates `integers.length` times. Was I supposed to use `for (int i = 0; i < integers.length; i++)` in the initial solution?
+Assistant: That is entirely correct. Java arrays start their indices at 0, not 1.
+User: Thank you for your help! I plugged the new solution into my code and it works now.
+<code>
+1. public static int CountOnes(int[] integers) {
+2.     int count = 0;
+3.     for (int integer : integers) {
+4.         if (integer == 1) {
+5.             count++;
+6.         }
+7.     }
+8.     return count;
+9. }
+</code>
+Assistant: I'm glad that I could clear up the concepts for you. Is there anything else you would want to ask?
+User: No, that's all for now. Thank you!
+</dialogue>

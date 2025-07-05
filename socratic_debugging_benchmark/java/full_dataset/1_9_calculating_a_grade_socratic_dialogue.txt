@@ -1,0 +1,105 @@
+<problem>
+Create a method `calculateGrade(float hw, float exams, float projects, float att)` that takes in four float parameters between 0 and 100 representing a student's grades in four different categories: Homework (`hw`) which is worth 20% of the final grade, Exams (`exams`) worth 40% of the final grade, Projects (`projects`) worth 30%, and Attendance (`att`), worth 10%. The function should calculate the final grade a student is getting and return a tuple containing the final letter grade and the final numeric grade rounded up to the nearest whole number.
+
+The letter grade should be determined based on the following scale:
+
+* A for a final rounded grade between 90 and 100 (inclusive)
+* B for a final rounded grade between 80 and 89 (inclusive)
+* C for a final rounded grade between 70 and 79 (inclusive)
+* D for a final rounded grade between 60 and 69 (inclusive)
+* F for a final rounded grade below 60.
+
+For example, if you enter `calculateGrade(75, 60, 73, 87)`, the function should return `('C', 70)` because the final raw score is `69.6` which rounds up to `70` and corresponds to a letter grade of `C`.
+
+## Example Cases:
+```
+calculateGrade(0, 0, 0, 0) => ('F', 0)
+calculateGrade(70, 60, 65, 70) => ('D', 64)
+calculateGrade(75, 60, 73, 100) => ('C', 71)
+calculateGrade(75, 60, 73, 87) => ('C', 70)
+calculateGrade(100, 89, 85, 90) == ('A', 90)
+calculateGrade(100, 100, 100, 100) => ('A', 100)
+```
+</problem>
+<bug_code>
+1. public static Tuple<String, Integer> calculateGrade(float hw, float exams, float projects, float att) {
+2.    float finalScore = hw * 0.2f + exams * 0.4f + projects * 0.3f + att * 0.1f;
+3.    finalScore = Math.round(finalScore);
+4.    if (finalScore >= 90) {
+5.        String letterGrade = "A";
+6.    } else if (finalScore >= 80) {
+7.        String letterGrade = "B";
+8.    } else if (finalScore >= 70) {
+9.        String letterGrade = "C";
+10.    } else if (finalScore >= 60) {
+11.        String letterGrade = "D";
+12.    } else {
+13.        String letterGrade = "F";
+14.    }
+15.    return new Tuple<>(letterGrade, finalScore);
+16. }
+</bug_code>
+<bug_desc>
+The function does not round `finalScore` to the nearest whole number. Consequently, when `finalScore` is `69.6` the function will return `D` instead of `C` as `letterGrade`. The function also returns a float `finalScore` instead of an integer.
+</bug_desc>
+<bug_fixes>
+After line 2, add a new line with the following snippet `finalScore = Math.round(finalScore);`.
+</bug_fixes>
+<unit_tests>
+assert calculateGrade(100, 100, 100, 100).equals(new Tuple<>("A", 100));
+assert calculateGrade(100, 89, 85, 90).equals(new Tuple<>("A", 90));
+assert calculateGrade(75, 60, 73, 100).equals(new Tuple<>("C", 71));
+assert calculateGrade(75, 60, 73, 87).equals(new Tuple<>("C", 70));
+assert calculateGrade(70, 60, 65, 70).equals(new Tuple<>("D", 64));
+assert calculateGrade(0, 0, 0, 0).equals(new Tuple<>("F", 0));
+</unit_tests>
+<stu_desc>
+
+</stu_desc>
+<dialogue>
+User: My code doesn't work. When the `finalScore` is 69.6, the function returns D instead of C.
+Assistant: Where, in your code, do you think this problem is happening?
+	<alt>Why do you expect the output of 69.6 to return D?
+	<alt>What do you think we can do to figure out where our problem is?
+User: I think it's happening in the if-statements.
+	<alt>I don't know where.
+	<alt>It's happening in the if-statement `finalScore >= 70` and `finalScore >= 60` It isn't reaching the `finalScore` of 70.
+	<alt>I think it's happening in the calculation of the `finalScore`. I'm not getting a rounded number.
+	Assistant: Try manually going through the if-statements yourself. If `finalScore` is 69.6, what output do you get? Which condition does it fulfill?
+	<alt>Which condition in the if-statements is causing your problem?
+User: Oh. I see. I need 69.6 to be rounded to 70, which would give me C, but it isn't being rounded. Obviously, it won't work this way.
+	<alt>I am getting that 69.6 should be caught in the `elif finalScore >= 60`. 69.6 is greater than or equal to 60.
+	<alt>I have no idea.
+	<alt>I don't really understand how if-statements work.
+Assistant: That's a good point! What do you think you should do next?
+	<alt>Good observation! How would you round `finalScore`?
+User: I need to round `finalScore`, but I don't know how to do that.
+	<alt>I can use the `Math.Round()` method on the `finalScore`.
+	<alt>I can do`finalScore = Math.Round(finalScore)`
+	<alt>I can do `finalScore = finalScore.Math.Round()`
+Assistant: You may need to look at the Python documentation to find the method you are looking for. Can you find a method that can help us?
+	<alt>If you don't know how to round a variable, do you have any idea where you could look to figure it out?
+User: Oh, wait. I found a Math.Round() function. If I don't specify the number of decimals, it rounds to the next integer. I could put a line of code that says `finalScore = Math.Round(finalScore)`.
+	<alt>I have no idea what method can help me.
+	<alt>I don't understand what a method is.
+	<alt>I could use `finalScore = Math.Round(finalScore, 2)`
+<code>
+1. public static Tuple<String, Integer> calculateGrade(float hw, float exams, float projects, float att) {
+2.    float finalScore = hw * 0.2f + exams * 0.4f + projects * 0.3f + att * 0.1f;
+3.    finalScore = Math.round(finalScore);
+4.    if (finalScore >= 90) {
+5.        String letterGrade = "A";
+6.    } else if (finalScore >= 80) {
+7.        String letterGrade = "B";
+8.    } else if (finalScore >= 70) {
+9.        String letterGrade = "C";
+10.    } else if (finalScore >= 60) {
+11.        String letterGrade = "D";
+12.    } else {
+13.        String letterGrade = "F";
+14.    }
+15.    return new Tuple<>(letterGrade, finalScore);
+16. }
+</code>
+Assistant: Good work! You did it.
+</dialogue>

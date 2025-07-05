@@ -1,0 +1,66 @@
+<problem>
+Define a method called `product(int a, int b) -> int` which takes two integer inputs: a and b. The method should return the product of these two values (i.e. a * b).
+
+## Example Cases: 
+```
+product(1, 2) => 2
+product(2, 4) => 8
+product(4, 4) => 16
+product(5, 5) => 25
+```
+</problem>
+<bug_code>
+1. public int product(int a, int b) {
+2.    a * b;
+3. }
+</bug_code>
+<bug_desc>
+The method does not compile because it is missing a return statement.
+</bug_desc>
+<bug_fixes>
+Add `return` before `a * b;`.
+</bug_fixes>
+<unit_tests>
+assert product(1, 2) == 2;
+assert product(2, 4) == 8;
+assert product(4, 4) == 16;
+assert product(5, 5) == 25;
+</unit_tests>
+<stu_desc>
+
+</stu_desc>
+<dialogue>
+User: Hello, I'm having trouble with `product()` method. I swear that I have done it correctly, but I'm failing even the first assertion and I can't figure out why.
+Assistant: Okay, can you explain your `product()` method in detail?
+	<alt>Could you tell me what methods are and how are they used in Java?
+	<alt>Upon running your code against the test cases, do you observe any errors?
+	<alt>Can you describe what happens after the method finishes multiplying `a` and `b`?
+	<alt>Suppose we run `int result = product(1, 2)`, what do you think the value of `result` will be after execution?
+	<alt>Let's run `int result = product(1, 2)` and then print `result` and observe the output in the terminal. What do you see?
+User: I take in two inputs, which I have named `a` and `b`, and then I multiply the two numbers together.
+Assistant: Okay, can you modify your code such that on line 3, you execute the line `System.out.println(product(1, 2));`?
+	<alt>How can we output the value of `product(1, 2)` to the user through the console?
+	<alt>Upon running your code against the test cases, do you observe any errors?
+	<alt>Can you describe what happens after the method finishes multiplying `a` and `b`?
+	<alt>Suppose we run `int result = product(1, 2)`, what do you think the value of `result` will be after execution?
+User: Okay, I've made that change, but when I run it, it just prints out nothing and still fails the assertion. Shouldn't it be printing out a number?
+<code>
+1. public int product(int a, int b) {
+2.    a * b;
+3. }
+4. System.out.println(product(1, 2));
+</code>
+Assistant: What do you expect your method to print instead? 
+	<alt>Check the Java documentation, why do methods need return values?
+	<alt>What could cause your method to not return a value?
+	<alt>A method will only take on a value when the keyword `return` is used followed by a value. Otherwise, it will not return any value. Do you know where to put `return` in your code?
+User: I expect it to print the product of `a` and `b`. Oh wait I am not returning anything. I put `return` on line 2 and it has started printing out a number, and the assertion statements are no longer resulting in an error. Thank you for your help!
+<code>
+1. public int product(int a, int b) {
+2.    return a * b;
+3. }
+4. System.out.println(product(1, 2));
+</code>
+Assistant: You're welcome. How did you verify that your code was correct?
+User: I ran the code against the test cases and it passed all of them. Thank you for your help!
+</dialogue>

@@ -1,0 +1,96 @@
+<problem>
+The four compass points can be abbreviated by single-letter strings as “N”, “E”, “S”, and “W”. Write a function `turnClockwise (String compassPoint)` that takes one of these four compass points as its parameter, and returns the next compass point in the clockwise direction. If `compassPoint` has another value that's distinct from the four compass points listed earlier, return the value null.
+
+## Example Cases:
+```
+turnClockwise("N") => "E"
+turnClockwise("W") => "N"
+turnClockwise("S") => "W"
+turnClockwise("E") => "S"
+turnClockwise(42) => null
+turnClockwise("rubbish") => null
+```
+</problem>
+<bug_code>
+1. public class Compass {
+2.    public static String turnClockwise(String compassPoint) {
+3.        if (compassPoint = "N") {
+4.            return "E";
+5.        } else if (compassPoint = "E") {
+6.            return "S";
+7.        } else if (compassPoint = "S") {
+8.            return "W";
+9.        } else if (compassPoint = "W") {
+10.            return "N";
+11.        } else {
+12.            return null;
+13.        }
+14.    }
+15. }
+</bug_code>
+<bug_desc>
+There are syntax errors on lines 3, 5, 7, and 9.
+</bug_desc>
+<bug_fixes>
+Replace `=` with `==` on lines 3, 5, 7, and 9.
+</bug_fixes>
+<unit_tests>
+assert Compass.turnClockwise("N").equals("E");
+assert Compass.turnClockwise("W").equals("N");
+assert Compass.turnClockwise("S").equals("W");
+assert Compass.turnClockwise("E").equals("S");
+assert Compass.turnClockwise("42") == null;
+assert Compass.turnClockwise("rubbish") == null;
+</unit_tests>
+<stu_desc>
+
+</stu_desc>
+<dialogue>
+User: Hello! I am having trouble with the code can you help me? It's throwing an error.
+Assistant: What is the error that you observe?
+	<alt>Let's start with a warm-up exercise. How do you assign the value "N" to a variable `compassPoint`?
+	<alt>Can you describe what your code is trying to do?
+User: I have a syntax error on line 3. I'm not sure why.
+	<alt>The terminal says "SyntaxError: invalid syntax"
+Assistant: Can you describe what you are trying to do on line 3?
+	<alt>Ah. Can you show me how you would assign the value "N" to a variable `compassPoint`?
+	<alt>What operator do you use to assign a value?
+	<alt>What operator do you use to check for equality?
+	<alt>Can you show me how you would check if the variable `x` is equal to 1?
+User: I am trying to check if `compassPoint` is equal to "N"
+Assistant: What operator do you use to check for equality?
+	<alt>Ah. Can you show me how you would assign the value "N" to a variable `compassPoint`?
+	<alt>What operator do you use to assign a value?
+User: I use the `=` operator to check for equality.
+	<alt>Oh! I should be using `==` instead of `=` to check equality
+Assistant: Ah. Can you show me how you would assign the value "N" to a variable `compassPoint`?
+	<alt>Can you show me how you would assign the value 1 to a variable `x`?
+	<alt>What operator do you use to assign a value?
+User: I would use `compassPoint = "N"`
+	<alt>Oh! I should be using `==` instead of `=` to check equality
+Assistant: Are you sure that you can use the same operator `=` for assignment and to check for equality?
+	<alt>Can you look in the Java documentation to see what operator is used to check for equality?
+User: Oh! Probably not. What operator should I use?
+	<alt>Oh! I checked the documentation. I should be using `==` instead of `=` to check equality
+Assistant: Can you look in the Java documentation to see what operator is used to check for equality?
+User: Oh I found it! I should use `==` instead of `=`. Let me edit my code!
+<code>
+1. public class Compass {
+2.    public static String turnClockwise(String compassPoint) {
+3.        if (compassPoint == "N") {
+4.            return "E";
+5.        } else if (compassPoint == "E") {
+6.            return "S";
+7.        } else if (compassPoint == "S") {
+8.            return "W";
+9.        } else if (compassPoint == "W") {
+10.            return "N";
+11.        } else {
+12.            return null;
+13.        }
+14.    }
+15. }
+</code>
+Assistant: Good job. Look good. Let me know if you have any more questions.
+User: Thank you! Goodbye!
+</dialogue>

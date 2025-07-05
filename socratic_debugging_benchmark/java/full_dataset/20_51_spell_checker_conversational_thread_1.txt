@@ -1,0 +1,93 @@
+<problem>
+Write a method `spellchecker(List<String> words, List<String> wordsToCheck) -> List<String>` that takes in a list of words and a list of words to check. The method should return a list of strings that indicate whether or not each word in `wordsToCheck` is spelled properly. A word is spelled properly if it is in the `words` list. If a word is spelled properly, the string should say "[word] is spelled properly!". If a word is misspelled, the string should say "[word] is misspelled!". The order of the strings in the returned list should be the same as the order of the words in `wordsToCheck`.
+## Example Cases:
+```
+spellchecker(Arrays.asList("dog", "cat", "giraffe", "horse", "dragon"), Arrays.asList("dogz", "cet", "giraffe", "horsee", "dragon")) => Arrays.asList("dogz is misspelled!", "cet is misspelled!", "giraffe is spelled properly!", "horsee is misspelled!", "dragon is spelled properly!")
+spellchecker(Arrays.asList("apple", "banana", "orange", "pear", "grape"), Arrays.asList("apple", "baana", "orange", "pier", "grayp")) => Arrays.asList("apple is spelled properly!", "baana is misspelled!", "orange is spelled properly!", "pier is misspelled!", "grayp is misspelled!")
+spellchecker(Arrays.asList("bubbles", "cup", "food"), Arrays.asList("bubbles", "cup", "food", "bubbles", "cup", "food")) => Arrays.asList("bubbles is spelled properly!", "cup is spelled properly!", "food is spelled properly!", "bubbles is spelled properly!", "cup is spelled properly!", "food is spelled properly!")
+spellchecker(Collections.emptyList(), Arrays.asList("bubbles", "cup", "food")) => Arrays.asList("bubbles is misspelled!", "cup is misspelled!", "food is misspelled!")
+```
+</problem>
+<bug_code>
+1. public List<String> spellchecker(List<String> words, List<String> wordsToCheck) {
+2.    List<String> result = new ArrayList<>();
+3.    for (String word : wordsToCheck) {
+4.        if (words.contains(word)) {
+5.            result.add(word + " is spelled properly!");
+6.        } else {
+7.            result.add(word + " is misspelled!");
+8.        }
+9.    }
+10.}
+</bug_code>
+<bug_desc>
+The method does not compile because it is missing a return statement.
+</bug_desc>
+<bug_fixes>
+After line 9, insert `return result;`.
+</bug_fixes>
+<unit_tests>
+assert spellchecker(Arrays.asList("dog", "cat", "giraffe", "horse", "dragon"), Arrays.asList("dogz", "cet", "giraffe", "horsee", "dragon")).equals(Arrays.asList("dogz is misspelled!", "cet is misspelled!", "giraffe is spelled properly!", "horsee is misspelled!", "dragon is spelled properly!"));
+assert spellchecker(Arrays.asList("apple", "banana", "orange", "pear", "grape"), Arrays.asList("apple", "baana", "orange", "pier", "grayp")).equals(Arrays.asList("apple is spelled properly!", "baana is misspelled!", "orange is spelled properly!", "pier is misspelled!", "grayp is misspelled!"));
+assert spellchecker(Arrays.asList("bubbles", "cup", "food"), Arrays.asList("bubbles", "cup", "food", "bubbles", "cup", "food")).equals(Arrays.asList("bubbles is spelled properly!", "cup is spelled properly!", "food is spelled properly!", "bubbles is spelled properly!", "cup is spelled properly!", "food is spelled properly!"));
+assert spellchecker(Collections.emptyList(), Arrays.asList("bubbles", "cup", "food")).equals(Arrays.asList("bubbles is misspelled!", "cup is misspelled!", "food is misspelled!"));
+</unit_tests>
+<stu_desc>
+
+</stu_desc>
+<dialogue>
+User: Help! I'm really stuck.
+Assistant: Okay, where do you think the problem is?
+	<alt>Are any of the test cases passing?
+	<alt>Have you completed all the steps in the instructions?
+	<alt>Let's look at your method, can you explain what it is supposed to do?
+User: I don't know.
+Assistant: Can you explain what your method is supposed to do?
+	<alt>Do any of the test cases pass?
+	<alt>Have you skipped any steps in the instructions?
+User: My method takes in one list of words and compares it to another list.
+	<alt>My method compares two lists of words and then returns information about them.
+	<alt>I followed the prompt.
+Assistant: Is that everything it is supposed to do according to the prompt?
+	<alt>Does it do anything else?
+	<alt>Okay, on what line of code does it take in those lists of words?
+	<alt>Let's look at the first line of the method on line 1, does it take in two lists of words?
+User: I think so.
+Assistant: Let's take a more detailed look at the output. What does that part say?
+	<alt>Let's look at the first line of the method on line 1, does it take in two lists of words?
+	<alt>How would that information be sent out of the method?
+	<alt>What information is supposed to be returned from the method?
+User: It says there is a compilation error and that the method must return a value.
+Assistant: Okay, so let's break that down. Let's focus on the return value part, what does it mean?
+	<alt>Okay, so let's break that down. What does it mean when a method must return a value?
+	<alt>Why could your method be missing a return value?
+User: That's when a method is supposed to give back a result.
+	<alt>I'm not sure.
+Assistant: So why would there be a method that doesn't give back a result?
+	<alt>Let's look at the second part, what does it mean when a method must return a value?
+	<alt>Why could your method be missing a return value?
+User: I don't know.
+	<alt>My method doesn't return anything!
+Assistant: Where could the missing return value be coming from?
+	<alt>Why could your method be missing a return value?
+	<alt>Check the Java documentation, why do methods need return values?
+User: My method.
+Assistant: Why could it be missing a return value?
+	<alt>Check the Java documentation, why do methods need return values?
+User: I forgot the return statement!
+<code>
+1. public List<String> spellchecker(List<String> words, List<String> wordsToCheck) {
+2.    List<String> result = new ArrayList<>();
+3.    for (String word : wordsToCheck) {
+4.        if (words.contains(word)) {
+5.            result.add(word + " is spelled properly!");
+6.        } else {
+7.            result.add(word + " is misspelled!");
+8.        }
+9.    }
+10.   return result;
+11.}
+</code>
+Assistant: Does it compile correctly now?
+User: Yes! Thanks!
+</dialogue>

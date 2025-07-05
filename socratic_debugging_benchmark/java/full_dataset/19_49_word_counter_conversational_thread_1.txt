@@ -1,0 +1,86 @@
+<problem>
+Write a function `countWords(String sentence) -> int` that returns the number of words in the sentence. A word is a maximal sequence of characters that does not contain spaces. For example, `countWords(" This is a sentence ")` returns 4. 
+## Example Cases:
+```
+countWords("hello world") => 2
+countWords("hello    world") => 2
+countWords("This is a sentence") => 4
+countWords("I love Python") => 3
+countWords("") => 0
+countWords(" ") => 0
+```
+</problem>
+<bug_code>
+1. public static int countWords(String sentence) {
+2.     int words = 0;
+3.     boolean spaceMode = true;
+4.     for (int i = 1; i < sentence.length(); i++) {
+5.         if (sentence.charAt(i) == ' ') {
+6.             if (!spaceMode) {
+7.                 words++;
+8.             }
+9.             spaceMode = true;
+10.        } else {
+11.            spaceMode = false;
+12.        }
+13.    }
+14.    if (!spaceMode) {
+15.        words++;
+16.    }
+17.    return words;
+18. }
+</bug_code>
+<bug_desc>
+On line 4, the for loop skips over the first character in the string `sentence`. Consequently, the function can miss counting a word if the first character in `sentence` is a word.
+</bug_desc>
+<bug_fixes>
+On line 4, replace `(1, sentence.length())` with `(0, sentence.length())`.
+</bug_fixes>
+<unit_tests>
+assert countWords("hello world") == 2;
+assert countWords("hello    world") == 2;
+assert countWords("This is a sentence") == 4;
+assert countWords("I love Python") == 3;
+assert countWords("") == 0;
+assert countWords(" ") == 0;
+</unit_tests>
+<stu_desc>
+
+</stu_desc>
+<dialogue>
+User: Hello! I am having a problem with this programming problem. My count seems off.
+Assistant: Did you try running your code? If so, is there a pattern you notice between the output of your code and what the answer should be?
+	<alt>Are there specific inputs that give you the wrong answer or is it always wrong?
+	<alt>Off in what way?
+User: Yes! My output seems to be 1 less than it should be.
+	<alt>My output is sometimes correct and sometimes lower than it should be
+Assistant: Does this happen with all inputs or just some inputs?
+User: I only seem to notice it on sentences that begin with "I" or "A", so I guess one-letter words.
+	<alt>It only happens with sentences that start with short words, it seems.
+	<alt>I thought it was working properly, but I just checked the sentence "I walked the dog" and the output was wrong.
+Assistant: Can you check how your function handles the beginning of the input? It seems like the issue might be there.
+	<alt>It only happens with sentences that start with short words, it seems.
+	<alt>Where do you count your first word?
+User: Oh, I see. I'm missing the first index when I loop. I guess I never put in the base case.
+<code>
+public static int countWords(String sentence) {
+    int words = 0;
+    boolean spaceMode = true;
+    for (int i = 0; i < sentence.length(); i++) {
+        if (sentence.charAt(i) == ' ') {
+            if (!spaceMode) {
+                words++;
+            }
+            spaceMode = true;
+        } else {
+            spaceMode = false;
+        }
+    }
+    if (!spaceMode) {
+        words++;
+    }
+    return words;
+}
+</code>
+Assistant: Great!
+</dialogue>

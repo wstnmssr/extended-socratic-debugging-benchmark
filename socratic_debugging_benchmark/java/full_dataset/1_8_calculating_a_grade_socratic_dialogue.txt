@@ -1,0 +1,191 @@
+<problem>
+Create a method `calculateGrade(float hw, float exams, float projects, float att)` that takes in four float parameters between 0 and 100 representing a student's grades in four different categories: Homework (`hw`) which is worth 20% of the final grade, Exams (`exams`) worth 40% of the final grade, Projects (`projects`) worth 30%, and Attendance (`att`), worth 10%. The function should calculate the final grade a student is getting and return a tuple containing the final letter grade and the final numeric grade rounded up to the nearest whole number.
+
+The letter grade should be determined based on the following scale:
+
+* A for a final rounded grade between 90 and 100 (inclusive)
+* B for a final rounded grade between 80 and 89 (inclusive)
+* C for a final rounded grade between 70 and 79 (inclusive)
+* D for a final rounded  grade between 60 and 69 (inclusive)
+* F for a final rounded grade below 60.
+
+For example, if you enter `calculateGrade(75, 60, 73, 87)`, the function should return `('C', 70)` because the final raw score is `69.6` which rounds up to `70` and corresponds to a letter grade of `C`.
+
+## Example Cases:
+```
+calculateGrade(100, 100, 100, 100) => ('A', 100)
+calculateGrade(100, 89, 85, 90) => ('A', 90)
+calculateGrade(72, 96, 74, 98) => ('B', 85)
+calculateGrade(100, 82, 68, 94) => ('B', 83)
+calculateGrade(75, 60, 73, 100) => ('C', 71)
+calculateGrade(75, 60, 73, 87) => ('C', 70)
+calculateGrade(70, 60, 65, 70) => ('D', 64)
+calculateGrade(12, 14, 23, 10) => ('F', 16)
+calculateGrade(0, 0, 0, 0) => ('F', 0)
+```
+</problem>
+<bug_code>
+1. public static Tuple<String, Integer> calculateGrade(float hw, float exams, float projects, float att) {
+2.    float finalScore = hw * 0.2f + exams * 0.4f + projects * 0.3f + att * 0.1f;
+3.    int roundedScore = Math.round(finalScore);
+4.    String letterGrade;
+5.    if (roundedScore > 90) {
+6.        letterGrade = "A";
+7.    } else if (roundedScore >= 80) {
+8.        letterGrade = "B";
+9.    } else if (roundedScore >= 70) {
+10.        letterGrade = "C";
+11.    } else if (roundedScore >= 60) {
+12.        letterGrade = "D";
+13.    } else {
+14.        letterGrade = "F";
+15.    }
+16.    return new Tuple<>(letterGrade, roundedScore);
+17. }
+</bug_code>
+<bug_desc>
+When `roundedScore` is `90` the if statement on line 5 evaluates to False, since `90` is not strictly greater than `90`. Consequently, the function assigns `B` to `letterGrade` which is incorrect.
+</bug_desc>
+<bug_fixes>
+Replace `roundedScore > 90` with `roundedScore >= 90` on line 5.
+</bug_fixes>
+<unit_tests>
+assert calculateGrade(100, 100, 100, 100).equals(new Tuple<>("A", 100));
+assert calculateGrade(100, 89, 85, 90).equals(new Tuple<>("A", 90));
+assert calculateGrade(72, 96, 74, 98).equals(new Tuple<>("B", 85));
+assert calculateGrade(100, 82, 68, 94).equals(new Tuple<>("B", 83));
+assert calculateGrade(75, 60, 73, 100).equals(new Tuple<>("C", 71));
+assert calculateGrade(75, 60, 73, 87).equals(new Tuple<>("C", 70));
+assert calculateGrade(70, 60, 65, 70).equals(new Tuple<>("D", 64));
+assert calculateGrade(12, 14, 23, 10).equals(new Tuple<>("F", 16));
+assert calculateGrade(0, 0, 0, 0).equals(new Tuple<>("F", 0));
+</unit_tests>
+<stu_desc>
+
+</stu_desc>
+<dialogue>
+User: Help! I'm stuck.
+Assistant: Okay, where do you think the problem is?
+	<alt>What test cases are passing?
+	<alt>What test cases are failing?
+	<alt>Have you reread the prompt?
+	<alt>Have you checked the calculation for the grade?
+	<alt>Have you checked the if-statement?
+User: I don't know.
+Assistant: Let's go through your function line by line, how can you check the calculation on line 2?
+	<alt>Let's start by looking at the test cases, what is the first one to fail?
+	<alt>Let's start by looking at the test cases, does the first one pass?
+User: I can add a print statement to check the number.
+<code>
+1. public static Tuple<String, Integer> calculateGrade(float hw, float exams, float projects, float att) {
+2.    float finalScore = hw * 0.2f + exams * 0.4f + projects * 0.3f + att * 0.1f;
+3.    System.out.println(finalScore);
+4.    int roundedScore = Math.round(finalScore);
+5.    System.out.println(roundedScore);
+6.    String letterGrade;
+7.    if (roundedScore > 90) {
+8.        letterGrade = "A";
+9.    } else if (roundedScore >= 80) {
+10.        letterGrade = "B";
+11.    } else if (roundedScore >= 70) {
+12.        letterGrade = "C";
+13.    } else if (roundedScore >= 60) {
+14.        letterGrade = "D";
+15.    } else {
+16.        letterGrade = "F";
+17.    }
+18.    return new Tuple<>(letterGrade, roundedScore);
+19. }
+</code>
+Assistant: Good, what is the first test case to fail?
+	<alt>Good, does the first test case succeed?
+	<alt>Good, is the first `finalScore` correct?
+	<alt>Good, what is the first incorrect `finalScore`?
+User: The second test case fails.
+Assistant: Is the `finalScore` correct for that test case?
+	<alt>Do you think it is a rounding error?
+	<alt>What do you think the error is?
+	<alt>Do you think it is a problem with matching the grade to the letter?
+	<alt>How can you check if it is a rounding error?
+User: Yes, the final score is correct for that test case.
+Assistant: How can you check if it is a rounding error?
+	<alt>What do you think the error is?
+	<alt>Do you think it is a problem with matching the grade to the letter?
+User: I can add another print statement after line 4 and check the rounding.
+<code>
+1. public static Tuple<String, Integer> calculateGrade(float hw, float exams, float projects, float att) {
+2.    float finalScore = hw * 0.2f + exams * 0.4f + projects * 0.3f + att * 0.1f;
+3.    System.out.println(finalScore);
+4.    int roundedScore = Math.round(finalScore);
+5.    System.out.println(roundedScore);
+6.    String letterGrade;
+7.    if (roundedScore > 90) {
+8.        letterGrade = "A";
+9.    } else if (roundedScore >= 80) {
+10.        letterGrade = "B";
+11.    } else if (roundedScore >= 70) {
+12.        letterGrade = "C";
+13.    } else if (roundedScore >= 60) {
+14.        letterGrade = "D";
+15.    } else {
+16.        letterGrade = "F";
+17.    }
+18.    return new Tuple<>(letterGrade, roundedScore);
+19. }
+</code>
+Assistant: Very good. Do you think it is a rounding error?
+	<alt>What do you think the error is?
+	<alt>Do you think it is a problem matching the grade to the letter?
+User: No, I don't think so.
+Assistant: Now, let's look at the if-statement that matches letters to the grades. Can you tell me what the first statement checks?
+	<alt>What do you think the error is?
+	<alt>Do you think it is a problem matching the grade to the letter?
+User: It checks if the rounded score is greater than 90.
+	<alt>I see, it should be greater than or equal to!
+Assistant: Think about that carefully, would it return true or false if the grade was exactly 90?
+User: No, it wouldn't! That's wrong, it should be greater than or equal to!
+<code>
+1. public static Tuple<String, Integer> calculateGrade(float hw, float exams, float projects, float att) {
+2.    float finalScore = hw * 0.2f + exams * 0.4f + projects * 0.3f + att * 0.1f;
+3.    System.out.println(finalScore);
+4.    int roundedScore = Math.round(finalScore);
+5.    System.out.println(roundedScore);
+6.    String letterGrade;
+7.    if (roundedScore >= 90) {
+8.        letterGrade = "A";
+9.    } else if (roundedScore >= 80) {
+10.        letterGrade = "B";
+11.    } else if (roundedScore >= 70) {
+12.        letterGrade = "C";
+13.    } else if (roundedScore >= 60) {
+14.        letterGrade = "D";
+15.    } else {
+16.        letterGrade = "F";
+17.    }
+18.    return new Tuple<>(letterGrade, roundedScore);
+19. }
+</code>
+Assistant: Try running it again, does it work now?
+User: Yes! It does. I'll remove the extra print statements.
+<code>
+1. public static Tuple<String, Integer> calculateGrade(float hw, float exams, float projects, float att) {
+2.    float finalScore = hw * 0.2f + exams * 0.4f + projects * 0.3f + att * 0.1f;
+3.    int roundedScore = Math.round(finalScore);
+4.    String letterGrade;
+5.    if (roundedScore >= 90) {
+6.        letterGrade = "A";
+7.    } else if (roundedScore >= 80) {
+8.        letterGrade = "B";
+9.    } else if (roundedScore >= 70) {
+10.        letterGrade = "C";
+11.    } else if (roundedScore >= 60) {
+12.        letterGrade = "D";
+13.    } else {
+14.        letterGrade = "F";
+15.    }
+16.    return new Tuple<>(letterGrade, roundedScore);
+17. }
+</code>
+Assistant: Very good.
+User: Thank you!
+</dialogue>

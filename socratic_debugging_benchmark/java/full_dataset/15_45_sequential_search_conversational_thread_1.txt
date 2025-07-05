@@ -1,0 +1,66 @@
+<problem>
+Write a function `search(int x, int[] seq)` that returns the index of the first occurrence of `x` in `seq`. If `x` is not in `seq`, return the index where `x` should be inserted to keep `seq` sorted. Assume that `seq` is sorted in ascending order.
+## Example Cases:
+```
+search(5, new int[]{-1, 5, 8, 10, 12}) => 1
+search(-2, new int[]{-1, 57, 65}) => 0
+search(0, new int[]{-120, 60, 78, 100}) => 1
+search(77, new int[]{-100, -50, 5, 44, 66, 76, 99}) => 6
+search(55, new int[]{-99, -2, 0}) => 3
+```
+</problem>
+<bug_code>
+1. public static int search(int x, int[] seq) {
+2.   for (int i = 0; i < seq.length; i++) {
+3.     if (x <= seq[i]) {
+4.       return i;
+5.     }
+6.   }
+7. }
+</bug_code>
+<bug_desc>
+The function returns `null` when `x` is greater than all of the elements in `seq` instead of returning the index indicating that `x` should be inserted at the end of the array.
+</bug_desc>
+<bug_fixes>
+Insert a line following line 4, with one indentation containing `return seq.length;`
+</bug_fixes>
+<unit_tests>
+assert search(5, new int[]{-1, 5, 8, 10, 12}) == 1;
+assert search(-2, new int[]{-1, 57, 65}) == 0;
+assert search(0, new int[]{-120, 60, 78, 100}) == 1;
+assert search(77, new int[]{-100, -50, 5, 44, 66, 76, 99}) == 6;
+assert search(55, new int[]{-99, -2, 0}) == 3;
+</unit_tests>
+<stu_desc>
+
+</stu_desc>
+<dialogue>
+User: Hi! I seem to be having some issues with this function I am trying to implement. It sometimes returns `null` instead of an output. 
+Assistant: Can you walk me through how your function handles some simple examples? For example, `search(5, new int[]{-1, 5, 8, 10, 12})`.
+	<alt>Do you notice a pattern with the cases that produce `null`?
+	<alt>When do you notice `null` as the output?
+	<alt>What inputs have you tried? When do you get `null`?
+	<alt>It seems that your function may be returning nothing in certain cases. Can you think of a case where this might happen?
+User: For that example, I get an output of 1. I first iterate through the elements in the list and check when the 5 is less than or equal to the current element, which happens at index 1. 
+	<alt>This just gives an output of 1
+Assistant: I see. What happens when you have a larger `x` value? Try `search(20, new int[]{-1, 5, 8, 10, 12})`.
+	<alt>I see. What about when your `x` is not less than or equal to any elements?
+	<alt>That seems right. How do you deal with negative numbers and numbers greater than all the list elements?
+	<alt>Good. Is there a case where your function might not return anything?
+User: For that, my code seems to return `null`. I use the same procedure and iterate through the list element. Oh, I see. Since 20 is greater than all the current list elements, I never get to the `return`
+Assistant: It looks like you just need to handle that other case then. What's the correct output to return when `x` is greater than all the existing elements?
+	<alt>Where would you want to insert an element that is larger than all the current ones?
+	<alt>What's the correct index to insert 20 in the example I gave you earlier?
+User: I think I should put 20 at the end of the list. So the output should be `5`. I'll update the code. It looks like it works and passes all the tests!
+<code>
+1. public static int search(int x, int[] seq) {
+2.   for (int i = 0; i < seq.length; i++) {
+3.     if (x <= seq[i]) {
+4.       return i;
+5.     }
+6.   }
+7.   return seq.length;
+8. }
+</code>
+Assistant: Let me know if you need more help
+</dialogue>

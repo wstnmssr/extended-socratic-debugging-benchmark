@@ -1,0 +1,74 @@
+<problem>
+Write a function `substrLen(String s, String t) -> int` that takes as input a string `s` and a non-empty string `t` and returns the length of the longest substring of `s` that does not contain `t`. For example, if `s = "abracadabra"` and `t = "ca"`, then the longest substring of `s` that does not contain `t` is `"dabra"`, so the function should return 5.
+## Example Cases:
+```
+substrLen("abracadabra", "ca") => 5
+substrLen("I love Python", "Py") => 7
+substrLen("contest", "test") => 3
+substrLen("icey ice", "ice") => 2
+substrLen("icey ice cream", "ice") => 6
+substrLen("abracadabra", "abba") => 11
+```
+</problem>
+<bug_code>
+1. public static int substrLen(String s, String t) {
+2.     int maxLen = 0;
+3.     int start = 0;
+4.     int pos = s.indexOf(t, start);
+5.     while (pos != -1) {
+6.         String crtStr = s.substring(start, pos);
+7.         maxLen = Math.max(crtStr.length(), maxLen);
+8.    
+9.         pos = s.indexOf(t, start);
+10.    }
+11.    String lastStr = s.substring(start);
+12.    maxLen = Math.max(lastStr.length(), maxLen);
+13.    return maxLen;
+14. }
+</bug_code>
+<bug_desc>
+The value of `start` never changes inside the while loop, thus `pos` which is computed based on `start` never changes either. Consequently, the while loop on line 5 never stops.
+</bug_desc>
+<bug_fixes>
+On line 8 insert the code `start = pos + t.length()`.
+</bug_fixes>
+<unit_tests>
+assert substrLen("abracadabra", "ca") == 5;
+assert substrLen("I love Python", "Py") == 7;
+assert substrLen("contest", "test") == 3;
+assert substrLen("icey ice", "ice") == 2;
+assert substrLen("icey ice cream", "ice") == 6;
+assert substrLen("abracadabra", "abba") == 11;
+</unit_tests>
+<stu_desc>
+
+</stu_desc>
+<dialogue>
+User: Hi! My code does not stop and I do not understand why, can you help?
+Assistant: Sure. Can you tell me the role of the variable `start`?
+	<alt>Sure. Can you explain to me what your code is supposed to do, line by line? Explain the role of each variable.
+	<alt>Sure. Let's assume the code runs on the first test example, can you run it manually for me line by line and show the value of each variable until you are done with one iteration of the while loop?
+User: `start` is supposed to indicate the position in `s` where we want to start searching for the next occurrence of `t`. Initially, we start searching from the start of the string, therefore it is initialized with 0.
+Assistant: OK. Does `start` ever change inside the while loop?
+	<alt>OK. So the first value of `start` is 0, what is the next value of `start`?
+	<alt>OK. So, after you find the first occurrence of `t` at position `pos` in `s`, where do you want to start searching for the next occurrence of `t`?
+	<alt>OK. Can you run your code manually on the first test example and tell me what are the values that `start` takes in each iteration of the while loop?
+User: Ah, it doesn't! It stays equal to 0, which means that `pos` does not change either. Let me fix that... it works! Thank you!
+<code>
+public static int substrLen(String s, String t) {
+    int maxLen = 0;
+    int start = 0;
+    int pos = s.indexOf(t, start);
+    while (pos != -1) {
+        String crtStr = s.substring(start, pos);
+        maxLen = Math.max(crtStr.length(), maxLen);
+        start = pos + t.length();
+        pos = s.indexOf(t, start);
+    }
+    String lastStr = s.substring(start);
+    maxLen = Math.max(lastStr.length(), maxLen);
+    return maxLen;
+}
+</code>
+Assistant: You are welcome!
+</dialogue>

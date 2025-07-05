@@ -1,0 +1,92 @@
+<problem>
+Write a function `isTwice(String string, char ch) -> boolean` that returns `true` if the character `ch` appears exactly twice in the string `string`. Otherwise, it returns `false`.
+## Example Cases:
+```
+isTwice("hello", 'l') => true
+isTwice("hello", 'o') => false
+isTwice("hello", 'h') => false
+isTwice("", 'e') => false
+isTwice("I'm a string!", ' ') => true
+isTwice("Hey, I'm a string!", ' ') => false
+```
+</problem>
+<bug_code>
+1. public static boolean isTwice(String str, char chr) {
+2.     int count = 0;
+3.     for (int i = 0; i < str.length(); i++) {
+4.         if (str.charAt(i) == chr) {
+5.             count++;
+6.         }
+7.     }
+8.     if (count >= 2) {
+9.         return true;
+10.    } else {
+11.        return false;
+12.    }
+13. }
+</bug_code>
+<bug_desc>
+On line 8, the function returns `true` if the character appears two or more times instead of exactly twice.
+</bug_desc>
+<bug_fixes>
+Replace `count >= 2` with `count == 2` on line 8.
+</bug_fixes>
+<unit_tests>
+assert isTwice("hello", 'l') == true;
+assert isTwice("hello", 'o') == false;
+assert isTwice("hello", 'h') == false;
+assert isTwice("", 'e') == false;
+assert isTwice("I'm a string!", ' ') == true;
+assert isTwice("Hey, I'm a string!", ' ') == false;
+</unit_tests>
+<stu_desc>
+
+</stu_desc>
+<dialogue>
+User: Hi! This code isn't working. Can you help?
+Assistant: Let's talk about boolean variables. Can you explain the difference between a boolean variable with the value of `False` versus a string variable with the value `"False"` is?
+	<alt>First, let's analyze how your program is behaving and why. Can you describe the issue that you are facing?
+	<alt>It seems that you have a `NameError` error in your code. Are you able to find where this error is?
+	<alt>Let's start with a warm-up question. What are the two possible values of a boolean variable in Python?
+User: Well, boolean and Strings are different data types. Booleans have a true or false value, and Strings are just written words.
+	<alt>a boolean true is written like `bool = True`, whereas a String variable is written as str = "True."
+	<alt>I don't think there is a difference. I think both boolean "true" and String "true" looks the same when you write the code. For example, str = true and bool = true.
+Assistant: Let's try an example. How would you declare a string variable "str" and initialize it to the value "true?"
+	<alt>What are the two possible values of a boolean variable in Python?
+User: String str = "true";
+	<alt>Wouldn't you want to use a boolean variable for that instead?
+	<alt>String str = true;
+	<alt>str = true
+	<alt>String str = True;
+Assistant: That's right! Now, how would you declare a boolean variable `bool` and initialize it to false?
+User: boolean bool = false;
+	<alt>boolean bool = False;
+	<alt>boolean bool = "False";
+	<alt>I don't see that we are using boolean variables in the code.
+Assistant: Programming languages are very sensitive to syntax. For example, String variables require the use of quotations around their input. Can you think of any similar constraints to boolean inputs?
+	<alt>Try looking at the Python documentation. Can you find the section where they describe the use of Boolean variables? How does it compare to what you wrote here?
+	<alt>Let's try that in the Python terminal. What happens when you type `bool = false`?
+User: Oh, I see. I was writing `bool = true` when I should have been writing `bool = True`. I am missing a capitalization.
+	<alt>I should be using 0 and 1 instead of false and true.
+	<alt>I can't think of any constraints.
+Assistant: Good! Can you find where you made this mistake in your code?
+	<alt>How can you edit your code to fix this error?
+User: Yes, I found it. I'm going to show you the changed code now.
+<code>
+1. public static boolean isTwice(String str, char chr) {
+2.     int count = 0;
+3.     for (int i = 0; i < str.length(); i++) {
+4.         if (str.charAt(i) == chr) {
+5.             count++;
+6.         }
+7.     }
+8.     if (count == 2) {
+9.         return true;
+10.    } else {
+11.        return false;
+12.    }
+13. }
+</code>
+Assistant: Good work! Looks like you did it.
+User: Thank you!
+</dialogue>

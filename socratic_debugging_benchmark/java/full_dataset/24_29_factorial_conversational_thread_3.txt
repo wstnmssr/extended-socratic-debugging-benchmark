@@ -1,0 +1,205 @@
+<problem>
+Write a function `factorial(int n)` that computes the factorial n! of a natural number n, which is defined mathematically as:
+
+$0! = 1$
+$n! = n \times (n - 1)!$
+
+Additionally, if the input integer n is negative the function should return 0.
+
+## Example Cases:
+```
+factorial(-1) => 0
+factorial(0) => 1
+factorial(1) => 1
+factorial(2) => 2
+factorial(3) => 6
+factorial(4) => 24
+factorial(5) => 120
+```
+</problem>
+<bug_code>
+1. public class Factorial {
+2.    public static int factorial(int n) {
+3.        if (n < 0) {
+4.            return 0;
+5.        }
+6.        int fact = 1;
+7.        for (int i = 0; i < n; i++) {
+8.            fact = fact * i;
+9.        }
+10.       return fact;
+11.   }
+12.}
+</bug_code>
+<bug_desc>
+On line 8, `fact` is multiplied with 0 in the first iteration of the for loop. Consequently, at every iteration fact stays equal with 0 instead of being updated to be equal with factorial of `(i + 1)`. Therefore, the function will return 0, irrespective of n.
+</bug_desc>
+<bug_fixes>
+Replace `i` with `(i + 1)` in line 8.
+Replace `i = 0` with `i = 1` and `i < n` with `i <= n` in line 7.
+</bug_fixes>
+<unit_tests>
+assert Factorial.factorial(-1) == 0;
+assert Factorial.factorial(0) == 1;
+assert Factorial.factorial(1) == 1;
+assert Factorial.factorial(2) == 2;
+assert Factorial.factorial(3) == 6;
+assert Factorial.factorial(4) == 24;
+assert Factorial.factorial(5) == 120;
+</unit_tests>
+<stu_desc>
+
+</stu_desc>
+<dialogue>
+User: Hi! I implemented the factorial function but it doesn't work and I do not know why. Can you help?
+Assistant: Sure. Can you tell me for what values of n it fails and what values it returns in those cases?
+	<alt>Certainly. Can you tell me what happens when you run the function with `n = 2`?
+	<alt>Can you describe your issue in more detail?
+	<alt>Try running the function against the test cases. Do you observe any patterns?
+User: For n = 1 or larger it returns the same value, 0.
+Assistant: Let's see what happens when `n` is 1. What is the first value that is assigned to variable `i` in line 7?
+	<alt>Let's see what happens when `n` is 1. Before line 8 is evaluated in the first iteration of the for loop, what are the values of the variables `fact` and `i`?
+	<alt>Let's see what happens when `n` is 1. Can you insert a new line between lines 7 and 8 that prints the values of the variables `fact` and `i`?
+	<alt>Let's see what happens when `n` is 1. What does `i = 0` do when `n` is 1?
+	<alt>Can you tell me what `i = 0` does?
+	<alt>Let's start with a warm-up question, does `i = 0` start with 0 or 1?
+	<alt>According to the Java documentation, does `i = 0` start with 0 or 1?
+User: The first value assigned to `i` will be 1.
+	<alt>Aaah, I understand! The first value assigned to `i` will be 0, because `range` by default starts at 0.
+	<alt>Oh! `i` is not declared before the for loop is created maybe that causes this issue.
+Assistant: Are you sure about that? Can you verify that the first value assigned to `i` is 1?
+	<alt>How can you verify that the first value assigned to `i` is 1?
+	<alt>Let's verify this. Open the Java shell and type `for (int i = 0; i < 1; i++) { System.out.println(i); }`. What do you see? 
+	<alt>Let's verify this. Add a print statement inside the for loop that prints the value of `i` at each iteration. What is the first value of `i`?
+	<alt>Can you look in the Java documentation to see what is the first value computed by range, when used with only one argument?
+	<alt>Let's open the debugger. Step through your code until you reach line 8 for the first time. What do you notice about the value of `i`?
+	<alt>Can you explain how `i` would be equal to 1 during the first iteration of the for loop?
+User: OK, let me print its value at each iteration. I see, the first value is 0, not 1!
+<code>
+1. public class Factorial {
+2.    public static int factorial(int n) {
+3.        if (n < 0) {
+4.            return 0;
+5.        }
+6.        int fact = 1;
+7.        for (int i = 0; i < n; i++) {
+8.            System.out.println(i);
+9.            fact = fact * i;
+10.       }
+11.       return fact;
+12.   }
+13.}
+</code>
+Assistant: What happens when any number is multiplied by 0?
+	<alt>That's right. What happens when `fact` is multiplied by `i`?
+	<alt>Given that `i` is 0 in the first iteration of the for loop, what is the value of `fact` after the product operation is executed?
+	<alt>Now, how do you explain the function returning 0 when `n` is greater or equal to 1?
+User: It becomes 0. I see now. `fact` becomes 0 after the product operation is executed. That's why my function returns 0 for all `n >= 1`.
+Assistant: How can you modify your code to fix this issue?
+	<alt>How can you fix the code so that in the first iteration `fact` is multiplied with 1, not with 0?
+User: I don't know, can you help?
+	<alt>I will multiply fact with `i + 1`. Let me do that … It works! Thank you for your help!
+	<alt>I can change to `for (int i = 1; i <= n; i++)` so that it starts iterating at 1.
+	<alt>I can change to `for (int i = 1; i < n; i++)` so that it starts iterating at 1.
+	<alt>I can change to `for (int i = 0; i < n; i++) { i = i + 1; }`, so that the first value is 0 + 1.
+Assistant: How can you ensure that in the first iteration `fact` is multiplied by 1?
+	<alt>Think about what `for (int i = 0; i < n; i++)` does to `i`. How can you ensure that in the first iteration `fact` is never multiplied by 0?
+	<alt>How can you change the for loop so that the iterator variable `i` is not equal to 0 in the first iteration of the for loop?
+	<alt>Let's take it one step at a time. The cause of the issue is that `fact` is multiplied by 0 in the first iteration of the for loop. To fix this issue, what do we need to prevent?
+	<alt>How can you change the for loop so that the iterator variable `i` iterates starting from 1?
+User: I can add a line that sets `i` to 1 before the for loop.
+<code>
+1. public class Factorial {
+2.    public static int factorial(int n) {
+3.        if (n < 0) {
+4.            return 0;
+5.        }
+6.        int fact = 1;
+7.        int i = 1;
+8.        for (i = 0; i < n; i++) {
+9.            System.out.println(i);
+10.           fact = fact * i;
+11.       }
+12.       return fact;
+13.   }
+14.}
+</code>
+Assistant: Let's see if that works. Can you try it for `n = 1`?
+	<alt>Ok! Let's run the code for `n = 2` and see what happens.
+	<alt>How can you verify that the first value assigned to `i` is 1?
+User: Hm... It still returns 0. I rushed.
+	<alt>It still returns 0. I rushed. I think I need to change the for loop.
+Assistant: Do you know why it still returns 0?
+	<alt>What do you think `for (int i = 0; i < n; i++)` is doing to `i`?
+	<alt>Let's look at the terminal output. What value is `i` when being printed on line 9?
+User: I think the problem is that `i` is still 0 in the first iteration of the for loop. It still prints 0. I think I can add an `if` statement to the for loop that checks if `i` is 0 and if so, sets it to 1.
+<code>
+1. public class Factorial {
+2.    public static int factorial(int n) {
+3.        if (n < 0) {
+4.            return 0;
+5.        }
+6.        int fact = 1;
+7.        int i = 1;
+8.        for (i = 0; i < n; i++) {
+9.            if (i == 0) {
+10.               i = 1;
+11.           }
+12.           System.out.println(i);
+13.           fact = fact * i;
+14.       }
+15.       return fact;
+16.   }
+17.}
+</code>
+	<alt>It still prints 0. I think I need to make a change in the for loop.
+	<alt>I don't know. Can you help?
+Assistant: Let's see if that works. Can you try it against the test cases?
+	<alt>Ok! Let's run the code for `n>=2` and see what happens.
+	<alt>Is there a simpler way to fix this issue?
+	<alt>What happens to `i` in the second iteration of the for loop now?
+User: Hm... it's incorrect for both `n = 2` and `n = 3`. I think I need to multiply `fact` starting from 1, then 2, then 3 instead of what I'm doing now 1, then 1, then 2.
+Assistant: Good. How can you change the for loop so that the iterator variable `i` is not equal to 0 in the first iteration of the for loop?
+	<alt>How can you edit the code so that `fact` is multiplied with 1, then 2, then 3?
+	<alt>What do you think you can do to make sure that `fact` is multiplied with 1, then 2, then 3?
+	<alt>How can you change the for loop so that the iterator variable `i` iterates starting from 1?
+User: I think I am going to change `for (int i = 0; i < n; i++)` to `for (int i = 1; i <= n; i++)` so that it starts iterating at 1.
+<code>
+1. public class Factorial {
+2.    public static int factorial(int n) {
+3.        if (n < 0) {
+4.            return 0;
+5.        }
+6.        int fact = 1;
+7.        for (int i = 1; i <= n; i++) {
+8.            fact = fact * i;
+9.        }
+10.       return fact;
+11.   }
+12.}
+</code>
+	<alt>I think I am going to change `for (int i = 0; i < n; i++)` to `for (int i = 1; i < n; i++)` so that it starts iterating at 1.
+	<alt>I think I am going to change `for (int i = 0; i < n; i++) { i = i + 1; }` so that the first value is 0 + 1.
+Assistant: Sounds good. Let's try it on all the test cases especially for `n = 2` and `n = 3` again.
+	<alt>Did you try it again for `n >=2`?
+User: It works! Thank you for your help!
+Assistant: Awesome. Don't forget to remove the print statement before you submit your code.
+	<alt>Good! I'm glad I could help. If you have any other questions, feel free to ask me again.
+User: Thank you! I will do that.
+<code>
+1. public class Factorial {
+2.    public static int factorial(int n) {
+3.        if (n < 0) {
+4.            return 0;
+5.        }
+6.        int fact = 1;
+7.        for (int i = 1; i <= n; i++) {
+8.            fact = fact * i;
+9.        }
+10.       return fact;
+11.   }
+12.}
+</code>
+Assistant: I'm glad I could help. If you have any other questions, feel free to ask me again.
+User: Thank you!
+</dialogue>

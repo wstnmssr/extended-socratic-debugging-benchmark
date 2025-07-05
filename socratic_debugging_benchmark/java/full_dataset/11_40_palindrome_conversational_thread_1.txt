@@ -1,0 +1,73 @@
+<problem>
+Write a function called `isPalindrome(String string) -> boolean` that returns true if the string is a palindrome and false otherwise. A palindrome is a string that is the same when read forwards and backwards.
+## Example Cases:
+```
+isPalindrome("racecar") => true
+isPalindrome("hello") => false
+isPalindrome("hannah") => true
+isPalindrome("firetruck") => false
+isPalindrome("nice") => false
+isPalindrome("") => true
+```
+</problem>
+<bug_code>
+1. public static boolean isPalindrome(String string) {
+2.     String revString = "";
+3.     for (int i = 0; i < string.length(); i++) {
+4.         revString = string.charAt(i) + revString;
+5.     }
+6.     if (revString = string) {
+7.         return true;
+8.     } else {
+9.         return false;
+10.    }
+11. }
+</bug_code>
+<bug_desc>
+On line 6, the function throws a syntax error.
+</bug_desc>
+<bug_fixes>
+Replace `=` with `==` on line 6.
+</bug_fixes>
+<unit_tests>
+assert isPalindrome("racecar") == true;
+assert isPalindrome("hello") == false;
+assert isPalindrome("hannah") == true;
+assert isPalindrome("firetruck") == false;
+assert isPalindrome("nice") == false;
+assert isPalindrome("") == true;
+</unit_tests>
+<stu_desc>
+
+</stu_desc>
+<dialogue>
+User: Hey! I have a compiler error here.
+Assistant: Ok, what error do you see?
+	<alt>Let's start with a warm-up exercise. How do you assign a value of 1 to a variable `x`?
+	<alt>What line is the compiler error pointing towards?
+User: It's giving me an error on my equality operator use.
+Assistant: I see. How do you assign a value of 1 to a variable `x`?
+	<alt>How do you assign an empty string to the variable `rev_string`?
+	<alt>How would you check if two  variables `x` and `y` are equivalent?
+	<alt>Can you recall what the assignment operator is?
+User: I use the `=` operator.
+Assistant: What are you trying to do in line 5?
+	<alt>How would you check if  two variables `x` and `y` are equivalent?
+User: Ah I see the problem now. I should use `==` instead of equals to check for equality. Let me edit my code.
+	<alt>I am trying to check if `rev_string` is equal to `string`.
+<code>
+1. public static boolean isPalindrome(String string) {
+2.     String revString = "";
+3.     for (int i = 0; i < string.length(); i++) {
+4.         revString = string.charAt(i) + revString;
+5.     }
+6.     if (revString == string) {
+7.         return true;
+8.     } else {
+9.         return false;
+10.    }
+11. }
+</code>
+Assistant: Looks good! Does it pass all the test cases now?
+User: Yes it does! Thank you so much!
+</dialogue>
